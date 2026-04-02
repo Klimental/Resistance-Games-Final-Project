@@ -15,12 +15,11 @@ public class Damage : MonoBehaviour
     [SerializeField]
     private int maxHealth;
 
-    //loot object
-    [SerializeField]
+    
+    [SerializeField] //loot object
     private GameObject loot;
 
-    //for communication with kill count
-    private LevelManager theLevelManager;
+    private LevelManager theLevelManager; //for communication with kill count
 
     // Start is called before the first frame update
     void Start()
@@ -56,8 +55,7 @@ public class Damage : MonoBehaviour
         //use else if to make sure player's hitbox is prioritized over their hurtbox
         else if (other.CompareTag("Player"))
         {
-                //deals damage
-                player.Damage(damage);
+                player.Damage(damage); //deals damage
 
                 player.knockbackCount = player.knockbackLength;
                 player.knockbackCount++;
