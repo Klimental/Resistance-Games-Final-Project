@@ -24,6 +24,7 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
+        //this system basically requires an array of sprites for varying levels of health. The player's health is a value that must match the size of the array
         if (player.currentHealth < 0) { player.currentHealth = 0; }
         {
 
