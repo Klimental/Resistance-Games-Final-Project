@@ -52,69 +52,37 @@ public class EnemySpawner : MonoBehaviour
             hasEntered = true;
             StartCoroutine(SpawnRoutine());
             //SpawnAgent();
-            zoneTrigger.enabled = false;
+            zoneTrigger.enabled = false; //turn off the zone trigger so that the player can't touch the trigger and call the method again 
         }
     }
 
+    //preliminary spawn method, no NavMesh magic.
     private IEnumerator SpawnRoutine()
     {
         while (true) //replace "true" with a condition later that will stop the enemy spawn
         {
-            //determine spawn location
-            Vector2 spawnPosition = new Vector2(spawnX, spawnY);
-
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
-            {
-                spawnPosition = hit.position;
-                //spawn enemy
-                GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-                NavMeshAgent agent = newEnemy.GetComponent<NavMeshAgent>();
-                if (agent != null)
-                {
-                    // 4. Warp the agent to the exact point (important!)
-                    agent.Warp(spawnPosition);
-
-                    // 5. Enable the agent component if it was disabled in the prefab
-                    agent.enabled = true;
-
-                    // 6. Set the destination
-                    if (player != null)
-                    {
-                        agent.SetDestination(player.transform.position);
-                    }
-
-                    
-                }
-            }
-            yield return new WaitForSeconds(spawnTime);
-
+            Vector2 spawnPosition = new Vector2(spawnX, spawnY); //determine spawn location
+            GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity); //instantiate enemy prefab
+            yield return new WaitForSeconds(spawnTime); //wait to rerun the method
         }
 
-        /*public Vector3 position()
+        //my attempt at NavMesh. Feel free to overhaul because it isn't working great.
+        /*public void SpawnAgent() 
         {
-
-            return new Vector3 = (transform.position.x, transform.position.y, 0);
-        }*/
-
-        /*public void SpawnAgent()
-        {
-            // 1. Determine a potential location
+            //Determine a potential location
             Vector3 randomLocation = transform.position;
             randomLocation.y = transform.position.y; // Keep Y level consistent initially
 
             NavMeshHit hit;
 
-            // 2. Find the nearest point on the NavMesh
             // The second parameter is the search radius, the third is the area mask
             if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
             {
                 Vector3 spawnPoint = hit.position;
 
-                // 3. Instantiate the object
+                //Instantiate the object
                 GameObject newAgentObject = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
 
-                // Get the NavMeshAgent component
                 NavMeshAgent agent = newAgentObject.GetComponent<NavMeshAgent>();
 
                 if (agent != null)
