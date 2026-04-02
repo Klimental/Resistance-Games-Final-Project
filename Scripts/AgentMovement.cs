@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 
+//This script isn't currently in use right now. I think it's a leftover of experiments with NavMesh implementation
+//You can overhaul this if it's better to use a separate script for the NavMesh movement, or use the code enclosed in the method of the EnemySpawner script.
+
 public class AgentMovement : MonoBehaviour
 {
     public GameObject target; // Assign the target in the Inspector
