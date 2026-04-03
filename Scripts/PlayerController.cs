@@ -45,11 +45,21 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //transform.position = new Vector2(startCoordinateX, startCoordinateY); //sometimes necessary for going into new scenes
         myRigidBody = GetComponent<Rigidbody2D>();
         theLevelManager = FindObjectOfType<LevelManager>();
         anim = GetComponent<Animator>();
         currentHealth = maxHealth; //make sure to set health back to full
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            canMove = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            canMove = true;
+            GetComponent<SpriteRenderer>().enabled = true;
+            transform.position = new Vector2(startCoordinateX, startCoordinateY); //sometimes necessary for going into new scenes
+        }
     }
 
     private void Update()
